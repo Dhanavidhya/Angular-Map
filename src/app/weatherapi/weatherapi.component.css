@@ -1,0 +1,26 @@
+agm-map {
+    height: 600px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.input {
+    background-color: #2d3436;
+    text-align: center;
+    color: rgb(255, 255, 255);
+
+}
+
+.button {
+    background-color: #6c5ce7;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}

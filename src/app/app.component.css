@@ -1,0 +1,13 @@
+.navbar-nav>li {
+    padding-left: 30px;
+    padding-right: 30px;
+    text-decoration: none;
+}
+
+a {
+    color: cadetblue;
+    text-decoration: none;
+}
+a:hover{
+    color:wheat
+}

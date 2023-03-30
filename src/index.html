@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>AngMap</title>
+  <base href="/">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  
+  <app-root></app-root>
+
+</body>
+</html>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+  function myFunctionWeather(source){
+     axios.get("https://api.openweathermap.org/data/2.5/weather?q="+source.value+"&appid=53bb525864ca2f042e8fa49cba6d1e15")
+      .then(response => {
+        temp = response.data.main.temp;
+
+        humidity = response.data.main.humidity;
+        wind = response.data.wind.speed;
+        // Slng = response.data.data[0].longitude;
+
+        document.getElementById("temp").innerHTML = "Temparature : " + temp + " degree";
+        document.getElementById("hum").innerHTML = "Humidity : " + humidity ;
+        document.getElementById("speed").innerHTML = "Wind Speed :" + wind + " km/s";
+
+        console.log(response.data);
+         }
+      )
+       .catch(error => {
+         console.log(error);
+       })
+  }
+  function myFunction(source,dest) {
+    console.log(source.value);
+  axios.get("http://api.positionstack.com/v1/forward?access_key=abc52f63df5117960e8293159e741b72&query="+source.value)
+  .then( response =>{
+    Slat = response.data.data[0].latitude;
+    Slng = response.data.data[0].longitude;
+    console.log(Slat,Slng);
+
+    axios.get("http://api.positionstack.com/v1/forward?access_key=abc52f63df5117960e8293159e741b72&query=" + dest.value)
+      .then(response => {
+        Dlat = response.data.data[0].latitude;
+        Dlng = response.data.data[0].longitude;
+        console.log("Destination is ",Dlat, Dlng);
+
+         lon1 =(Slng * Math.PI) / 180.0;
+        lon2 =  (Dlng * Math.PI) / 180.0;
+        lat1 =  (Slat * Math.PI) / 180.0
+        lat2 =  (Dlat * Math.PI) / 180.0;
+
+        // Haversine formula
+        dlon = lon2 - lon1;
+        dlat = lat2 - lat1;
+        a = Math.pow(Math.sin(dlat / 2), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(dlon / 2), 2);
+
+        c = 2 * Math.asin(Math.sqrt(a));
+
+        // Radius of earth in kilometers. Use 3956
+        // for miles
+        r = 6371;
+
+        // calculate the result
+        dist = (c * r);
+        console.log(dist);
+        document.getElementById("p1").innerHTML = "Distance is " + dist +" km";
+        
+        axios.get("https://api.distancematrix.ai/maps/api/distancematrix/json?origins="+Slat+","+Slng+"&destinations="+Dlat+","+Dlng+"&departure_time=now&key=Kzjj2rg5L4MtoGcBmlbcvWc1Scdb0")
+          .then(response => {
+            min = response.data.rows[0].elements[0];
+            if(min.status==="ZERO_RESULTS"){
+              minL = 120; 
+            }
+            else{
+              minL = min.duration.text;
+            }
+            
+            console.log(minL);
+            document.getElementById("mins").innerHTML = "Duration : " + dest.value + " is "+minL;
+        }).catch(function (error) {
+          console.error(error);
+        });
+
+      }
+      )
+      .catch(error => {
+        console.log(error);
+      })
+  }
+  )
+  .catch(error =>{
+    console.log(error);
+  })
+}
+
+
+</script>

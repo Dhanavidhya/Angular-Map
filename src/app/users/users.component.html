@@ -1,0 +1,18 @@
+<div class="input">
+    <br>
+    <h4  style="font-family:'Courier New'">Enter Source </h4>
+    <p><input type="text" id="source" name="source" [(ngModel)]="source"></p>
+    <h4  style="font-family:'Courier New'" >Enter Destination </h4>
+    <p><input type="text" id="dest" name="dest" [(ngModel)]="dest"></p>
+    <h4  style="font-family:'Courier New'" id="p1" *ngIf="inputSD">Distance between is </h4>
+    <h4 style="font-family:'Courier New'" id="mins" *ngIf="inputSD"></h4>
+
+    <button  style="font-family:'Courier New'" type="button" class="button" onclick="myFunction(source, dest)" (click)="clickme()">Get Distance</button>
+    <br>
+    <br>
+</div>
+<agm-map [latitude]="latitude" [longitude]="longitude">
+<agm-marker [latitude]="latitude" [longitude]="longitude">
+
+</agm-marker>
+</agm-map>
